@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.0.3'
     id 'io.spring.dependency-management' version '1.1.0'
+    id 'org.asciidoctor.jvm.convert' version '3.3.2'
 }
 
 group = 'com.woorinpang'
@@ -12,6 +13,7 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+    asciidoctorExt
 }
 
 repositories {
@@ -20,6 +22,7 @@ repositories {
 }
 
 ext {
+    snippetsDir = file('build/generated-snippets')
     set('springCloudVersion', "2022.0.1")
 }
 
@@ -52,6 +55,10 @@ dependencies {
     implementation 'org.mapstruct:mapstruct:1.5.3.Final'
     implementation 'org.projectlombok:lombok:1.18.26'
 
+    //spring rest docs
+    asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor:{project-version}'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc:{project-version}'
+
     //test
     testImplementation 'com.h2database:h2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -66,6 +73,23 @@ dependencyManagement {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+test {
+    outputs.dir snippetsDir
+}
+
+asciidoctor {
+    inputs.dir snippetsDir
+    configurations 'asciidoctorExt'
+    dependsOn test
+}
+
+bootJar {
+    dependsOn asciidoctor
+    from ("${asciidoctor.outputDir}/html5") {
+        into 'static/docs'
+    }
 }
 
 clean {
