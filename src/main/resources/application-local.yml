@@ -16,6 +16,11 @@ spring:
         default_batch_fetch_size: 1000
     show-sql: true
 
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+
 file:
   directory: ${app.home:${user.home}}/workspace/github/woorinpang/attach
   url: http://${file.hostname:localhost}:8080
