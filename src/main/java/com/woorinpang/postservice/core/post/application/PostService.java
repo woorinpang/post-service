@@ -20,7 +20,7 @@ public class PostService {
     private final PostCommandMapper mapper;
 
     @Transactional
-    public Long save(SavePostCommand param) {
-        return postRepository.save(mapper.toPost(param)).getId();
+    public Long save(SavePostCommand command) {
+        return postRepository.save(mapper.toPost(command)).getId();
     }
 }
