@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class PostController {
 
     private final PostService postService;
-    private final PostDtoMapper mapper;
+    private final PostDtoMapper postDtoMapper;
 
     @PostMapping
     public ResponseEntity<JsonResponse> savePost(@RequestBody @Valid SavePostRequest request) {
@@ -27,6 +27,6 @@ public class PostController {
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(JsonResponse.CREATED(postService.save(mapper.toCommand(request))));
+                .body(JsonResponse.CREATED(postService.save(postDtoMapper.toCommand(request))));
     }
 }

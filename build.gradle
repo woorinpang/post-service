@@ -51,21 +51,25 @@ dependencies {
     annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 
     //lombok and mapstruct
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+    implementation 'org.projectlombok:lombok'
     implementation 'org.mapstruct:mapstruct:1.5.3.Final'
-    implementation 'org.projectlombok:lombok:1.18.26'
+    implementation 'org.projectlombok:lombok-mapstruct-binding:0.2.0' // v1.18.16+ 부터
+
+    annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0' // v1.18.16+ 부터
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+    annotationProcessor 'org.projectlombok:lombok'
 
     //spring rest docs
     asciidoctorExt "org.springframework.restdocs:spring-restdocs-asciidoctor:${asciidocVersion}"
     testImplementation "org.springframework.restdocs:spring-restdocs-mockmvc:${asciidocVersion}"
 
     //test
-    testImplementation 'org.projectlombok:lombok'
-    testAnnotationProcessor 'org.projectlombok:lombok'
     testImplementation 'com.h2database:h2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+
+    //mock S3
+//    implementation 'io.findify:s3mock_2.13:0.2.6'
 }
 
 dependencyManagement {

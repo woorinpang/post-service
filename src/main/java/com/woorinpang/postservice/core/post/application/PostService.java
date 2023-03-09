@@ -21,6 +21,6 @@ public class PostService {
 
     @Transactional
     public Long save(SavePostCommand command) {
-        return postRepository.save(mapper.toPost(command)).getId();
+        return postRepository.save(PostCommandMapper.INSTANCE.toPost(command)).getId();
     }
 }
