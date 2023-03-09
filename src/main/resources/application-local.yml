@@ -1,11 +1,4 @@
-server:
-  port: 9010
-
 spring:
-  security:
-    user:
-      name: admin
-      password: admin
   datasource:
     url: jdbc:mariadb://localhost:3306/post_db?allowPublicKeyRetrieval=true&useSSL=false
     username: woorinpang_user
@@ -19,15 +12,3 @@ spring:
         format_sql: true
         default_batch_fetch_size: 1000
     show-sql: true
-
-eureka:
-  client:
-    fetch-registry: false
-    register-with-eureka: false
-
-file:
-  directory: ${app.home:${user.home}}/workspace/github/woorinpang/attach
-  url: http://${file.hostname:localhost}:8080
-messages:
-  directory: ${file.directory}/messages
-

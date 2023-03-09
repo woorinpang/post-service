@@ -1,6 +1,6 @@
 package com.woorinpang.postservice.core.post.domain;
 
-import com.woorinpang.servlet.entity.BaseEntity;
+import com.woorinpang.postservice.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
