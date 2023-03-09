@@ -6,19 +6,19 @@ import com.woorinpang.postservice.core.post.presentation.dto.request.SavePostReq
 import com.woorinpang.postservice.test.IntegrationTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class PostControllerTest extends IntegrationTest {
 
     @Autowired
     protected PostService postService;
-    //@Autowired protected PostCommandMapper mapper;
 
     @Test
     void savePost() throws Exception {
@@ -30,7 +30,12 @@ class PostControllerTest extends IntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)));
 
-        resultActions.andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(MockMvcResultHandlers.print());
+        resultActions
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.timestamp").isNotEmpty())
+                .andExpect(jsonPath("$.message").value(HttpStatus.CREATED.getReasonPhrase()))
+                .andExpect(jsonPath("$.status").value(HttpStatus.CREATED.value()))
+                .andExpect(jsonPath("$.data.savedPostId").hasJsonPath())
+                .andDo(print());
     }
 }

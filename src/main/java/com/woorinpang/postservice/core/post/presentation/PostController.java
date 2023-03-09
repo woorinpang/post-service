@@ -1,9 +1,10 @@
 package com.woorinpang.postservice.core.post.presentation;
 
-import com.woorinpang.common.json.JsonResponse;
 import com.woorinpang.postservice.core.post.application.PostService;
 import com.woorinpang.postservice.core.post.presentation.dto.PostDtoMapper;
 import com.woorinpang.postservice.core.post.presentation.dto.request.SavePostRequest;
+import com.woorinpang.postservice.core.post.presentation.dto.response.SavePostResponse;
+import com.woorinpang.postservice.global.json.JsonResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,6 @@ public class PostController {
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(JsonResponse.CREATED(postService.save(postDtoMapper.toCommand(request))));
+                .body(JsonResponse.CREATED(new SavePostResponse(postService.save(postDtoMapper.toCommand(request)))));
     }
 }
