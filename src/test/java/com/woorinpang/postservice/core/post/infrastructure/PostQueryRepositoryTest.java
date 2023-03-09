@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 
-@Import(PostTestConfig.class)
+//@Import(PostTestConfig.class)
 class PostQueryRepositoryTest extends RepositoryTest {
 
     @Autowired protected PostQueryRepository postQueryRepository;

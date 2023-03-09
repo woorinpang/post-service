@@ -2,6 +2,7 @@ package com.woorinpang.postservice.core.post;
 
 import com.woorinpang.postservice.core.post.application.dto.command.SavePostCommand;
 import com.woorinpang.postservice.core.post.domain.Post;
+import com.woorinpang.postservice.core.post.presentation.dto.request.SavePostRequest;
 
 public class PostSetup {
 
@@ -19,6 +20,13 @@ public class PostSetup {
         return SavePostCommand.builder()
                 .title(TITLE)
                 .content(CONTENT)
+                .build();
+    }
+
+    public static SavePostRequest setSavePostRequest() {
+        return SavePostRequest.builder()
+                .postTitle(TITLE)
+                .postContent(CONTENT)
                 .build();
     }
 }
