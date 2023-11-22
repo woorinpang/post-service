@@ -1,72 +1,76 @@
 plugins {
-    id 'java'
-    id 'org.springframework.boot' version '3.0.3'
-    id 'io.spring.dependency-management' version '1.1.0'
+    id 'java-library'
+    id 'org.springframework.boot' apply false
+    id 'io.spring.dependency-management'
+    id 'org.asciidoctor.jvm.convert' apply false
 }
 
-group = 'com.woorinpang'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+allprojects {
+    group = "${projectGroup}"
+    version = "${applicationVersion}"
+    sourceCompatibility = project.javaVersion
 
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
+    repositories {
+        mavenCentral()
     }
 }
 
-repositories {
-    mavenCentral()
-    maven { url 'https://artifactory-oss.prod.netflix.net/artifactory/maven-oss-candidates' }
-}
+subprojects {
+    apply plugin: 'java-library'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'org.asciidoctor.jvm.convert'
 
-ext {
-    set('springCloudVersion', "2022.0.1")
-}
-
-dependencies {
-    implementation project(':common')
-
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-
-    //cloud
-    implementation 'org.springframework.cloud:spring-cloud-starter-config'
-    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-
-    //database
-    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
-
-    //querydsl springboot 3.0 이상
-    implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.0'
-    implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
-    annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
-    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
-    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
-
-    //lombok and
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-    implementation 'org.mapstruct:mapstruct:1.5.3.Final'
-    implementation 'org.projectlombok:lombok:1.18.26'
-
-    //test
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
-}
-
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        }
     }
-}
 
-tasks.named('test') {
-    useJUnitPlatform()
-}
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
 
-clean {
-    delete file('src/main/generated') //인텔리제이 Annotation processor 생성물
+    dependencies {
+        //lombok
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+
+        //test
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    }
+
+    bootJar.enabled = false
+    jar.enabled = true
+
+    test {
+        useJUnitPlatform()
+    }
+
+    tasks.register('contextTest', Test) {
+        group = 'verification'
+        useJUnitPlatform {
+            includeTags('context')
+        }
+    }
+
+    tasks.register('restDocsTest', Test) {
+        group = 'verification'
+        useJUnitPlatform {
+            includeTags('restdocs')
+        }
+    }
+
+    tasks.register('unitTest', Test) {
+        group = 'verification'
+        useJUnitPlatform {
+            includeTags('unit')
+        }
+    }
+
+    clean {
+        delete file('src/main/generated') //인텔리제이 Annotation processor 생성물
+    }
 }
