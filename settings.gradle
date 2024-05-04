@@ -6,7 +6,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'post-service'
+rootProject.name = 'WRP-POST-SERVICE'
 
 include 'core:core-api'
 include 'core:core-domain'
