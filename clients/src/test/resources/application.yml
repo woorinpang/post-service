@@ -1,0 +1,6 @@
+spring.application.name: client-user-test
+
+spring:
+  config:
+    import:
+      - client-user.yml

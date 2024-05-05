@@ -1,0 +1,42 @@
+user:
+  api:
+    url: http://localhost:8000/user-service
+    userValue: userDefaultValue
+
+spring.cloud.openfeign:
+  client:
+    config:
+      user-api:
+        connectTimeout: 2100
+        readTimeout: 5000
+        loggerLevel: full
+  compression:
+    response:
+      enabled: false
+  httpclient:
+    max-connections: 2000
+    max-connections-per-route: 500
+
+---
+spring.config.activate.on-profile: local
+
+user:
+  api:
+    url: http://localhost:8000/user-service
+    userValue: userLocalValue
+
+---
+spring.config.activate.on-profile: dev
+
+user:
+  api:
+    url: https://dev.woorinpang/user-service
+    userValue: userDevValue
+
+---
+spring.config.activate.on-profile: prod
+
+user:
+  api:
+    url: https://woorinpang/user-service
+    userValue: userProdValue

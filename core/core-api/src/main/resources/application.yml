@@ -6,4 +6,7 @@ spring:
     name: post-service
   config:
     import:
-      - core-db.yml
+      - monitoring.yml
+      - logging.yml
+      - core-domain.yml
+      - client-user.yml
