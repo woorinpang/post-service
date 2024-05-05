@@ -1,0 +1,8 @@
+### 게시글 등록
+POST {{host}}/posts
+Content-Type: application/json
+Authorization: {{access-token}}
+
+{
+  "title" : "title"
+}

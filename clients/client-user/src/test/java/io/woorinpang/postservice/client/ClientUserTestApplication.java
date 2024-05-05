@@ -1,4 +1,4 @@
-package io.woorinpang.client;
+package io.woorinpang.postservice.client;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

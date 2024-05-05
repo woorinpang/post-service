@@ -1,4 +1,4 @@
-package io.woorinpang.client.user.model;
+package io.woorinpang.postservice.client.user.model;
 
 import lombok.Builder;
 

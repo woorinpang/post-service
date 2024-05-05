@@ -1,4 +1,4 @@
-package io.woorinpang.postservice.core.api.controller.post;
+package io.woorinpang.postservice.core.api.controller.post.request;
 
 import lombok.AccessLevel;
 import lombok.Getter;

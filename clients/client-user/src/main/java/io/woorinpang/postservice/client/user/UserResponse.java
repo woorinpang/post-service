@@ -1,6 +1,6 @@
-package io.woorinpang.client.user;
+package io.woorinpang.postservice.client.user;
 
-import io.woorinpang.client.user.model.FindUserClientResult;
+import io.woorinpang.postservice.client.user.model.FindUserClientResult;
 
 public record UserResponse(
         long userId,
@@ -20,5 +20,4 @@ public record UserResponse(
                 .userState(userState)
                 .build();
     }
-
 }

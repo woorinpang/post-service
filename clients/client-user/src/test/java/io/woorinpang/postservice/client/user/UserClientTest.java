@@ -1,7 +1,8 @@
-package io.woorinpang.client.user;
+package io.woorinpang.postservice.client.user;
 
 import feign.RetryableException;
-import io.woorinpang.client.ClientUserContextTest;
+import io.woorinpang.postservice.client.ClientUserContextTest;
+import io.woorinpang.postservice.client.user.model.FindUserClientResult;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,7 +17,7 @@ public class UserClientTest extends ClientUserContextTest {
     @Test
     void shouldBeThrownExceptionWhenUser() {
         try {
-            userClient.findUser(1L);
+            FindUserClientResult user = userClient.findUser("", 1L);
         } catch (Exception e) {
             assertThat(e).isExactlyInstanceOf(RetryableException.class);
         }
