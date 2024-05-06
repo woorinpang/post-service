@@ -1,14 +1,19 @@
 package io.woorinpang.postservice.core.api.controller.post;
 
+import io.woorinpang.postservice.core.api.controller.post.param.FindPagePostSearchParam;
 import io.woorinpang.postservice.core.api.controller.post.request.AddPostRequest;
+import io.woorinpang.postservice.core.api.controller.post.response.FindPagePostResponse;
 import io.woorinpang.postservice.core.api.controller.post.response.FindPostResponse;
 import io.woorinpang.postservice.core.api.support.response.ApiResponse;
 import io.woorinpang.postservice.core.api.support.response.DefaultIdResponse;
-import io.woorinpang.postservice.core.domain.post.application.Post;
 import io.woorinpang.postservice.core.domain.post.application.PostService;
+import io.woorinpang.postservice.core.domain.post.domain.Post;
 import io.woorinpang.postservice.core.domain.user.LoginUser;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,17 +24,28 @@ import org.springframework.web.bind.annotation.*;
 public class PostController {
     private final PostService postService;
 
-    //TODO 목록 조회 + 페이징
+    /**
+     * Post 목록조회
+     */
+    @GetMapping
+    public ResponseEntity<ApiResponse<Page<FindPagePostResponse>>> findPagePost(
+            FindPagePostSearchParam param,
+            @PageableDefault(page = 0, size = 20) Pageable pageable
+    ) {
+        Page<FindPagePostResponse> response =
+                postService.findPagePosts(param.toPostSearchCondition(), pageable).map(FindPagePostResponse::new);
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(response));
+    }
 
     /**
-     * Post 단건 조회
+     * Post 단건조회
      */
     @GetMapping("/{postId}")
-    public ResponseEntity<ApiResponse<?>> findPost(
+    public ResponseEntity<ApiResponse<FindPostResponse>> findPost(
             @PathVariable long postId
     ) {
         Post post = postService.findPost(postId);
-        return ResponseEntity.ok().body(ApiResponse.success(new FindPostResponse(post)));
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(new FindPostResponse(post)));
     }
 
     /**

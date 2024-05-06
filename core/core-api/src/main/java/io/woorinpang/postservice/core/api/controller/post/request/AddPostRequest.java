@@ -1,6 +1,6 @@
 package io.woorinpang.postservice.core.api.controller.post.request;
 
-import io.woorinpang.postservice.core.domain.post.application.PostContent;
+import io.woorinpang.postservice.core.domain.post.domain.PostContent;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

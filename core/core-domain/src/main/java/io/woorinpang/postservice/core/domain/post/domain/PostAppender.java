@@ -1,4 +1,4 @@
-package io.woorinpang.postservice.core.domain.post.application;
+package io.woorinpang.postservice.core.domain.post.domain;
 
 import io.woorinpang.postservice.core.domain.post.repository.PostEntity;
 import io.woorinpang.postservice.core.domain.post.repository.PostEntityRepository;
