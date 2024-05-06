@@ -1,4 +1,4 @@
-package io.woorinpang.postservice.core.domain.post;
+package io.woorinpang.postservice.core.domain.post.repository;
 
 import io.woorinpang.postservice.core.domain.support.entity.BaseEntity;
 import jakarta.persistence.*;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Table(name = "Post")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Post extends BaseEntity {
+public class PostEntity extends BaseEntity {
 
     @Column(name = "title", columnDefinition = "varchar(255) not null comment '제목'")
     private String title;
@@ -25,7 +25,7 @@ public class Post extends BaseEntity {
     private Long userId;
 
     @Builder
-    public Post(long userId, String title, String content) {
+    public PostEntity(long userId, String title, String content) {
         this.userId = userId;
         this.title = title;
         this.content = content;

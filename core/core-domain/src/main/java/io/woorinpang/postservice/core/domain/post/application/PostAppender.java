@@ -1,5 +1,7 @@
-package io.woorinpang.postservice.core.domain.post;
+package io.woorinpang.postservice.core.domain.post.application;
 
+import io.woorinpang.postservice.core.domain.post.repository.PostEntity;
+import io.woorinpang.postservice.core.domain.post.repository.PostEntityRepository;
 import io.woorinpang.postservice.core.domain.user.LoginUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -7,14 +9,14 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class PostAppender {
-    private final PostRepository postRepository;
+    private final PostEntityRepository postRepository;
 
     public long append(LoginUser user, PostContent postContent) {
         return postRepository.save(toEntity(user, postContent)).getId();
     }
 
-    private static Post toEntity(LoginUser user, PostContent postContent) {
-        return Post.builder()
+    private static PostEntity toEntity(LoginUser user, PostContent postContent) {
+        return PostEntity.builder()
                 .userId(user.id())
                 .title(postContent.title())
                 .content(postContent.content())

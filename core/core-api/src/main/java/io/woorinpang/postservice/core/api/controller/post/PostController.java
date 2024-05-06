@@ -1,18 +1,17 @@
 package io.woorinpang.postservice.core.api.controller.post;
 
 import io.woorinpang.postservice.core.api.controller.post.request.AddPostRequest;
+import io.woorinpang.postservice.core.api.controller.post.response.FindPostResponse;
 import io.woorinpang.postservice.core.api.support.response.ApiResponse;
 import io.woorinpang.postservice.core.api.support.response.DefaultIdResponse;
-import io.woorinpang.postservice.core.domain.post.PostService;
+import io.woorinpang.postservice.core.domain.post.application.Post;
+import io.woorinpang.postservice.core.domain.post.application.PostService;
 import io.woorinpang.postservice.core.domain.user.LoginUser;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,6 +19,22 @@ import org.springframework.web.bind.annotation.RestController;
 public class PostController {
     private final PostService postService;
 
+    //TODO 목록 조회 + 페이징
+
+    /**
+     * Post 단건 조회
+     */
+    @GetMapping("/{postId}")
+    public ResponseEntity<ApiResponse<?>> findPost(
+            @PathVariable long postId
+    ) {
+        Post post = postService.findPost(postId);
+        return ResponseEntity.ok().body(ApiResponse.success(new FindPostResponse(post)));
+    }
+
+    /**
+     * Post 저장
+     */
     @PostMapping
     public ResponseEntity<ApiResponse<DefaultIdResponse>> addPost(
             @RequestBody @Valid AddPostRequest request
@@ -29,10 +44,6 @@ public class PostController {
         long successId = postService.addPost(new LoginUser(userId), request.toPostContent());
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(new DefaultIdResponse(successId)));
     }
-
-    //TODO 단건 조회
-
-    //TODO 목록 조회 + 페이징
 
     //TODO 수정
 

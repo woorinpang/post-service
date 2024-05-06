@@ -1,4 +1,4 @@
-package io.woorinpang.postservice.core.domain.post;
+package io.woorinpang.postservice.core.domain.post.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
