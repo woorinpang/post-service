@@ -18,8 +18,8 @@ public class PostService {
     private final PostAppender postAppender;
     private final PostFinder postFinder;
 
-    public Page<FindPagePostProjection> findPagePosts(PostSearchCondition condition, Pageable pageable) {
-        return postFinder.findPagePosts(condition, pageable);
+    public Page<FindPagePostProjection> findPagePost(PostSearchCondition condition, Pageable pageable) {
+        return postFinder.findPagePost(condition, pageable);
     }
 
     public Post findPost(long postId) {

@@ -14,7 +14,7 @@ public class PostFinder {
     private final PostEntityRepository postEntityRepository;
 
     @Transactional(readOnly = true)
-    public Page<FindPagePostProjection> findPagePosts(PostSearchCondition condition, Pageable pageable) {
+    public Page<FindPagePostProjection> findPagePost(PostSearchCondition condition, Pageable pageable) {
         return postQueryRepository.findPagePost(condition, pageable);
     }
 

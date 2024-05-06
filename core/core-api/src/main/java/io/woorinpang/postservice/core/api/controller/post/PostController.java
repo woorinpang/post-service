@@ -33,7 +33,7 @@ public class PostController {
             @PageableDefault(page = 0, size = 20) Pageable pageable
     ) {
         Page<FindPagePostResponse> response =
-                postService.findPagePosts(param.toPostSearchCondition(), pageable).map(FindPagePostResponse::new);
+                postService.findPagePost(param.toPostSearchCondition(), pageable).map(FindPagePostResponse::new);
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(response));
     }
 
