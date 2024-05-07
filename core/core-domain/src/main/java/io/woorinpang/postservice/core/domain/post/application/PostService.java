@@ -1,9 +1,6 @@
 package io.woorinpang.postservice.core.domain.post.application;
 
-import io.woorinpang.postservice.core.domain.post.domain.Post;
-import io.woorinpang.postservice.core.domain.post.domain.PostAppender;
-import io.woorinpang.postservice.core.domain.post.domain.PostContent;
-import io.woorinpang.postservice.core.domain.post.domain.PostFinder;
+import io.woorinpang.postservice.core.domain.post.domain.*;
 import io.woorinpang.postservice.core.domain.post.repository.FindPagePostProjection;
 import io.woorinpang.postservice.core.domain.post.repository.PostSearchCondition;
 import io.woorinpang.postservice.core.domain.user.LoginUser;
@@ -17,6 +14,7 @@ import org.springframework.stereotype.Service;
 public class PostService {
     private final PostAppender postAppender;
     private final PostFinder postFinder;
+    private final PostRemover postRemover;
 
     public Page<FindPagePostProjection> findPagePost(PostSearchCondition condition, Pageable pageable) {
         return postFinder.findPagePost(condition, pageable);
@@ -28,5 +26,9 @@ public class PostService {
 
     public long addPost(LoginUser user, PostContent postContent) {
         return postAppender.append(user, postContent);
+    }
+
+    public void deletePost(long postId) {
+        postRemover.delete(postId);
     }
 }

@@ -63,5 +63,14 @@ public class PostController {
 
     //TODO 수정
 
-    //TODO 삭제
+    /**
+     * Post 삭제
+     */
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<ApiResponse<?>> deletePost(
+            @PathVariable long postId
+    ) {
+        postService.deletePost(postId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(ApiResponse.success());
+    }
 }
