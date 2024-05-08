@@ -2,6 +2,7 @@ package io.woorinpang.postservice.core.api.controller.post;
 
 import io.woorinpang.postservice.core.api.controller.post.param.FindPagePostSearchParam;
 import io.woorinpang.postservice.core.api.controller.post.request.AddPostRequest;
+import io.woorinpang.postservice.core.api.controller.post.request.ModifyPostRequest;
 import io.woorinpang.postservice.core.api.controller.post.response.FindPagePostResponse;
 import io.woorinpang.postservice.core.api.controller.post.response.FindPostResponse;
 import io.woorinpang.postservice.core.api.support.response.ApiResponse;
@@ -61,7 +62,17 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(new DefaultIdResponse(successId)));
     }
 
-    //TODO 수정
+    /**
+     * Post 수정
+     */
+    @PutMapping("/{postId}")
+    public ResponseEntity<ApiResponse> modifyPost(
+            @PathVariable long postId,
+            @RequestBody @Valid ModifyPostRequest request
+    ) {
+        postService.modifyPost(postId, request.getTitle(), request.getContent());
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success());
+    }
 
     /**
      * Post 삭제

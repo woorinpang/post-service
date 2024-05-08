@@ -41,6 +41,11 @@ public class PostEntity extends BaseEntity {
         this.lastModifiedDate = LocalDateTime.now();
     }
 
+    public void modify(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
     public void delete() {
         this.isDeleted = TRUE;
     }

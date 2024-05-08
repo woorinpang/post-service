@@ -15,6 +15,7 @@ public class PostService {
     private final PostAppender postAppender;
     private final PostFinder postFinder;
     private final PostRemover postRemover;
+    private final PostModifier postModifier;
 
     public Page<FindPagePostProjection> findPagePost(PostSearchCondition condition, Pageable pageable) {
         return postFinder.findPagePost(condition, pageable);
@@ -26,6 +27,10 @@ public class PostService {
 
     public long addPost(LoginUser user, PostContent postContent) {
         return postAppender.append(user, postContent);
+    }
+
+    public void modifyPost(long postId, String title, String content) {
+        postModifier.modify(postId, title, content);
     }
 
     public void deletePost(long postId) {

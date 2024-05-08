@@ -1,11 +1,16 @@
 package io.woorinpang.postservice.core.domain.post.domain;
 
-import io.woorinpang.postservice.core.domain.post.repository.*;
+import io.woorinpang.postservice.core.domain.post.repository.FindPagePostProjection;
+import io.woorinpang.postservice.core.domain.post.repository.PostEntityRepository;
+import io.woorinpang.postservice.core.domain.post.repository.PostQueryRepository;
+import io.woorinpang.postservice.core.domain.post.repository.PostSearchCondition;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import static io.woorinpang.postservice.core.domain.post.domain.PostEntityRepositoryHelper.findPostEntityById;
 
 @Component
 @RequiredArgsConstructor
@@ -20,9 +25,6 @@ public class PostFinder {
 
     @Transactional(readOnly = true)
     public Post findPost(long postId) {
-        PostEntity postEntity = postEntityRepository
-                .findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("Post not found"));
-        return new Post(postEntity);
+        return new Post(findPostEntityById(postEntityRepository, postId));
     }
 }

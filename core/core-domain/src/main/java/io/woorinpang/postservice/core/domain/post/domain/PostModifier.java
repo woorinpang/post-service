@@ -8,11 +8,11 @@ import static io.woorinpang.postservice.core.domain.post.domain.PostEntityReposi
 
 @Component
 @RequiredArgsConstructor
-public class PostRemover {
+public class PostModifier {
     private final PostEntityRepository postEntityRepository;
 
-    public void delete(long postId) {
+    public void modify(long postId, String title, String content) {
         findPostEntityById(postEntityRepository, postId)
-                .delete();
+                .modify(title, content);
     }
 }
