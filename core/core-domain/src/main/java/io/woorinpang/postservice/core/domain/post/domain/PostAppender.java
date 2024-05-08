@@ -5,12 +5,14 @@ import io.woorinpang.postservice.core.domain.post.repository.PostEntityRepositor
 import io.woorinpang.postservice.core.domain.user.LoginUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
 public class PostAppender {
     private final PostEntityRepository postRepository;
 
+    @Transactional
     public long append(LoginUser user, PostContent postContent) {
         return postRepository.save(toEntity(user, postContent)).getId();
     }
