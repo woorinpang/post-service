@@ -70,7 +70,7 @@ class PostControllerTest extends RestDocsTest {
                                         fieldWithPath("result")
                                                 .type(JsonFieldType.STRING)
                                                 .description("결과 유형(SUCCESS/ERROR"),
-                                        fieldWithPath("data.id")
+                                        fieldWithPath("data.postId")
                                                 .type(JsonFieldType.NUMBER)
                                                 .description("생성된 Post 고유번호"),
                                         fieldWithPath("error")
@@ -108,7 +108,7 @@ class PostControllerTest extends RestDocsTest {
                                         fieldWithPath("result")
                                                 .type(JsonFieldType.STRING)
                                                 .description("결과 유형(SUCCESS/ERROR"),
-                                        fieldWithPath("data.id")
+                                        fieldWithPath("data.postId")
                                                 .type(JsonFieldType.NUMBER)
                                                 .description("생성된 Post 고유번호"),
                                         fieldWithPath("error")

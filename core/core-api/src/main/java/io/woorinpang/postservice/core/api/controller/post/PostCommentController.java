@@ -4,6 +4,7 @@ import io.woorinpang.postservice.core.api.controller.post.request.AddCommentRequ
 import io.woorinpang.postservice.core.api.support.response.ApiResponse;
 import io.woorinpang.postservice.core.api.support.response.DefaultIdResponse;
 import io.woorinpang.postservice.core.domain.post.application.PostCommentService;
+import io.woorinpang.postservice.core.domain.post.domain.PostCommentTarget;
 import io.woorinpang.postservice.core.domain.post.domain.PostTarget;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -35,10 +36,11 @@ public class PostCommentController {
     }
 
     @DeleteMapping("/{commentId}")
-    public ResponseEntity deleteComment(
+    public ResponseEntity<ApiResponse<?>> deleteComment(
             @PathVariable("postId") long postId,
             @PathVariable("commentId") long commentId
     ) {
+        postCommentService.deletePostComment(new PostCommentTarget(postId, commentId));
         return ResponseEntity.ok().body(ApiResponse.success());
     }
 }
