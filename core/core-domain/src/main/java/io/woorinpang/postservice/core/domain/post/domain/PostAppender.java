@@ -10,11 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 @RequiredArgsConstructor
 public class PostAppender {
-    private final PostEntityRepository postRepository;
+    private final PostEntityRepository postEntityRepository;
 
     @Transactional
     public long append(User user, PostContent postContent) {
-        return postRepository.save(toEntity(user, postContent)).getId();
+        return postEntityRepository.save(toEntity(user, postContent)).getId();
     }
 
     private static PostEntity toEntity(User user, PostContent postContent) {

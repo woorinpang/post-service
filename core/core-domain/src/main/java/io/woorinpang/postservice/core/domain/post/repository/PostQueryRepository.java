@@ -36,8 +36,7 @@ public class PostQueryRepository {
                 .select(Projections.constructor(FindPagePostProjection.class,
                         postEntity.id,
                         postEntity.title,
-                        postEntity.content,
-                        postEntity.userId))
+                        postEntity.createdDate))
                 .from(postEntity)
                 .where(
                         searchTitleContainsIgnoreCase(condition.getTitle()),
