@@ -21,19 +21,19 @@ public class PostService {
         return postFinder.findPagePost(condition, pageable);
     }
 
-    public Post findPost(long postId) {
-        return postFinder.findPost(postId);
+    public Post findPost(PostTarget target) {
+        return postFinder.findPost(target);
     }
 
     public long addPost(User user, PostContent postContent) {
         return postAppender.append(user, postContent);
     }
 
-    public void modifyPost(long postId, String title, String content) {
-        postModifier.modify(postId, title, content);
+    public void modifyPost(PostTarget target, String title, String content, User user) {
+        postModifier.modify(target, title, content, user);
     }
 
-    public void deletePost(long postId) {
-        postRemover.delete(postId);
+    public void deletePost(PostTarget target) {
+        postRemover.delete(target);
     }
 }

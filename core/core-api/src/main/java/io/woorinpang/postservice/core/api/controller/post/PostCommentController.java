@@ -23,6 +23,9 @@ import org.springframework.web.bind.annotation.*;
 public class PostCommentController {
     private final PostCommentService postCommentService;
 
+    /**
+     * postComment 목록조회
+     */
     @GetMapping
     public ResponseEntity<ApiResponse<?>> findComments(
             @PathVariable("postId") long postId,
@@ -33,15 +36,21 @@ public class PostCommentController {
         return ResponseEntity.ok().body(ApiResponse.success(response));
     }
 
+    /**
+     * postComment 추가
+     */
     @PostMapping
     public ResponseEntity<ApiResponse<DefaultIdResponse>> addComment(
             @PathVariable("postId") long postId,
             @RequestBody @Valid AddCommentRequest request,
             AuthenticatedUser authenticatedUser) {
-        long successId = postCommentService.addPostComment(new PostTarget(postId), request.toCommand(), new User(authenticatedUser.id()));
+        long successId = postCommentService.addPostComment(new PostTarget(postId), request.toCommand(), authenticatedUser.toUser());
         return ResponseEntity.ok().body(ApiResponse.success(new DefaultIdResponse(successId)));
     }
 
+    /**
+     * postComment 삭제
+     */
     @DeleteMapping("/{commentId}")
     public ResponseEntity<ApiResponse<?>> deleteComment(
             @PathVariable("postId") long postId,

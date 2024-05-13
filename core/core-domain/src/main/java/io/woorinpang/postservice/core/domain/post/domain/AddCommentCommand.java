@@ -16,7 +16,5 @@ public record AddCommentCommand(
                 .content(content)
                 .createdBy(userId)
                 .build();
-
     }
-
 }

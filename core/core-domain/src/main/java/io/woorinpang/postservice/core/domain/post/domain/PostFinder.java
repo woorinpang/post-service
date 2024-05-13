@@ -24,7 +24,7 @@ public class PostFinder {
     }
 
     @Transactional(readOnly = true)
-    public Post findPost(long postId) {
-        return new Post(findPostEntityById(postEntityRepository, postId));
+    public Post findPost(PostTarget target) {
+        return new Post(findPostEntityById(postEntityRepository, target.postId()));
     }
 }

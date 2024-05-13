@@ -30,6 +30,6 @@ public class PostCommentEntity extends BaseEntity {
         this.author = author;
         this.password = password;
         this.content = content;
-        this.addUserId(createdBy);
+        this.createUserId(createdBy);
     }
 }

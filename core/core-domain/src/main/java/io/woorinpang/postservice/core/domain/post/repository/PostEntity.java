@@ -7,8 +7,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 import static java.lang.Boolean.*;
 
 @Entity
@@ -35,12 +33,13 @@ public class PostEntity extends BaseEntity {
         this.title = title;
         this.content = content;
         this.isDeleted = FALSE;
-        this.addUserId(userId);
+        this.createUserId(userId);
     }
 
-    public void modify(String title, String content) {
+    public void modify(String title, String content, long userId) {
         this.title = title;
         this.content = content;
+        this.updateUserId(userId);
     }
 
     public void delete() {
