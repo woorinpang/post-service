@@ -1,6 +1,6 @@
 package io.woorinpang.postservice.core.domain.user;
 
-public record LoginUser(
+public record User(
         long id
 ) {
 }

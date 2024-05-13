@@ -14,14 +14,11 @@ public class FindPagePostResponse {
 
     private String title;
 
-    private long userId;
-
     private LocalDateTime createdDate;
 
     public FindPagePostResponse(FindPagePostProjection post) {
         this.postId = post.getPostId();
         this.title = post.getTitle();
-        this.userId = post.getUserId();
         this.createdDate = post.getCreatedDate();
     }
 }

@@ -13,8 +13,8 @@ public class PostRemover {
     private final PostEntityRepository postEntityRepository;
 
     @Transactional
-    public void delete(long postId) {
-        findPostEntityById(postEntityRepository, postId)
+    public void delete(PostTarget target) {
+        findPostEntityById(postEntityRepository, target.postId())
                 .delete();
     }
 }

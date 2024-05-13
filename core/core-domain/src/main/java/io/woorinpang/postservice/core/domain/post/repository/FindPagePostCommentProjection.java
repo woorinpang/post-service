@@ -2,7 +2,6 @@ package io.woorinpang.postservice.core.domain.post.repository;
 
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,15 +9,17 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class FindPagePostProjection {
-    private long postId;
-    private String title;
+public class FindPagePostCommentProjection {
+    private String author;
+
+    private String content;
+
     private LocalDateTime createdDate;
 
     @QueryProjection
-    public FindPagePostProjection(long postId, String title, LocalDateTime createdDate) {
-        this.postId = postId;
-        this.title = title;
+    public FindPagePostCommentProjection(String author, String content, LocalDateTime createdDate) {
+        this.author = author;
+        this.content = content;
         this.createdDate = createdDate;
     }
 }

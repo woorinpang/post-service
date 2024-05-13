@@ -5,7 +5,8 @@ import io.woorinpang.postservice.core.domain.post.repository.PostEntityRepositor
 
 public final class PostEntityRepositoryHelper {
     public static PostEntity findPostEntityById(final PostEntityRepository repository, final long postId) {
-        return repository.findById(postId)
+        return repository
+                .findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("Post not found"));
     }
 }
