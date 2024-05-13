@@ -1,6 +1,7 @@
 package io.woorinpang.postservice.core.api.controller.post;
 
 import io.woorinpang.postservice.core.api.controller.post.request.AddCommentRequest;
+import io.woorinpang.postservice.core.api.controller.post.response.FindPagePostCommentResponse;
 import io.woorinpang.postservice.core.api.support.response.ApiResponse;
 import io.woorinpang.postservice.core.api.support.response.DefaultIdResponse;
 import io.woorinpang.postservice.core.domain.post.application.PostCommentService;
@@ -8,6 +9,7 @@ import io.woorinpang.postservice.core.domain.post.domain.PostCommentTarget;
 import io.woorinpang.postservice.core.domain.post.domain.PostTarget;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +26,9 @@ public class PostCommentController {
             @PathVariable("postId") long postId,
             @PageableDefault(page = 0, size = 20) Pageable pageable
     ) {
-        return ResponseEntity.ok().body(ApiResponse.success());
+        Page<FindPagePostCommentResponse> response =
+                postCommentService.findPagePostComment(new PostTarget(postId), pageable).map(FindPagePostCommentResponse::new);
+        return ResponseEntity.ok().body(ApiResponse.success(response));
     }
 
     @PostMapping
