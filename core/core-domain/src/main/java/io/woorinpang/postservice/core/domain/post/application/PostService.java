@@ -3,7 +3,7 @@ package io.woorinpang.postservice.core.domain.post.application;
 import io.woorinpang.postservice.core.domain.post.domain.*;
 import io.woorinpang.postservice.core.domain.post.repository.FindPagePostProjection;
 import io.woorinpang.postservice.core.domain.post.repository.PostSearchCondition;
-import io.woorinpang.postservice.core.domain.user.LoginUser;
+import io.woorinpang.postservice.core.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,7 +25,7 @@ public class PostService {
         return postFinder.findPost(postId);
     }
 
-    public long addPost(LoginUser user, PostContent postContent) {
+    public long addPost(User user, PostContent postContent) {
         return postAppender.append(user, postContent);
     }
 

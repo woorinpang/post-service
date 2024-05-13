@@ -35,10 +35,7 @@ public class PostEntity extends BaseEntity {
         this.title = title;
         this.content = content;
         this.isDeleted = FALSE;
-        this.createdBy = String.valueOf(userId);
-        this.createdDate = LocalDateTime.now();
-        this.lastModifiedBy = String.valueOf(userId);
-        this.lastModifiedDate = LocalDateTime.now();
+        this.addUserId(userId);
     }
 
     public void modify(String title, String content) {

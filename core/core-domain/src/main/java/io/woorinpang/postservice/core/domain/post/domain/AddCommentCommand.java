@@ -7,13 +7,14 @@ public record AddCommentCommand(
         String password,
         String content
 ) {
-    public PostCommentEntity toPostCommentEntity(long postId) {
+    public PostCommentEntity toPostCommentEntity(long postId, long userId) {
         return PostCommentEntity
                 .builder()
                 .postId(postId)
                 .author(author)
                 .password(password)
                 .content(content)
+                .createdBy(userId)
                 .build();
 
     }

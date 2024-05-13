@@ -25,10 +25,11 @@ public class PostCommentEntity extends BaseEntity {
     private String content;
 
     @Builder
-    public PostCommentEntity(long postId, String author, String password, String content) {
+    public PostCommentEntity(long postId, String author, String password, String content, long createdBy) {
         this.postId = postId;
         this.author = author;
         this.password = password;
         this.content = content;
+        this.addUserId(createdBy);
     }
 }

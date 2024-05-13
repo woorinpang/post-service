@@ -7,6 +7,8 @@ import io.woorinpang.postservice.core.api.support.response.DefaultIdResponse;
 import io.woorinpang.postservice.core.domain.post.application.PostCommentService;
 import io.woorinpang.postservice.core.domain.post.domain.PostCommentTarget;
 import io.woorinpang.postservice.core.domain.post.domain.PostTarget;
+import io.woorinpang.postservice.core.domain.support.model.AuthenticatedUser;
+import io.woorinpang.postservice.core.domain.user.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -34,8 +36,9 @@ public class PostCommentController {
     @PostMapping
     public ResponseEntity<ApiResponse<DefaultIdResponse>> addComment(
             @PathVariable("postId") long postId,
-            @RequestBody @Valid AddCommentRequest request) {
-        long successId = postCommentService.addPostComment(new PostTarget(postId), request.toCommand());
+            @RequestBody @Valid AddCommentRequest request,
+            AuthenticatedUser authenticatedUser) {
+        long successId = postCommentService.addPostComment(new PostTarget(postId), request.toCommand(), new User(authenticatedUser.id()));
         return ResponseEntity.ok().body(ApiResponse.success(new DefaultIdResponse(successId)));
     }
 

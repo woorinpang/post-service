@@ -9,7 +9,7 @@ import io.woorinpang.postservice.core.api.support.response.ApiResponse;
 import io.woorinpang.postservice.core.api.support.response.DefaultIdResponse;
 import io.woorinpang.postservice.core.domain.post.application.PostService;
 import io.woorinpang.postservice.core.domain.post.domain.Post;
-import io.woorinpang.postservice.core.domain.user.LoginUser;
+import io.woorinpang.postservice.core.domain.user.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -58,7 +58,7 @@ public class PostController {
     ) {
         //TODO apigateway 에서 유저 정보를 responseBody 담아 보내야 함
         long userId = 1L;
-        long successId = postService.addPost(new LoginUser(userId), request.toPostContent());
+        long successId = postService.addPost(new User(userId), request.toPostContent());
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(new DefaultIdResponse(successId)));
     }
 

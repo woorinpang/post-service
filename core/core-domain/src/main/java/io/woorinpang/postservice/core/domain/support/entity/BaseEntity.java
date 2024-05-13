@@ -16,4 +16,9 @@ public class BaseEntity extends BaseTimeEntity {
     @LastModifiedBy
     @Column(nullable = false, length = 60) @Comment("수정자")
     protected String lastModifiedBy;
+
+    protected void addUserId(long userId) {
+        this.createdBy = String.valueOf(userId);
+        this.lastModifiedBy = String.valueOf(userId);
+    }
 }
