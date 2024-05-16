@@ -17,6 +17,7 @@ public class CoreDataSourceConfig {
 
     @Bean
     public HikariDataSource coreDataSource(@Qualifier("coreHikariConfig") HikariConfig hikariConfig) {
+        System.out.println("=========== " + hikariConfig.getJdbcUrl());
         HikariDataSource hikariDataSource = new HikariDataSource(hikariConfig);
         return hikariDataSource;
     }
