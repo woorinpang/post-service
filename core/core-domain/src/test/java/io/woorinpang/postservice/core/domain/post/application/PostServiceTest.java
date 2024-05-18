@@ -1,10 +1,9 @@
 package io.woorinpang.postservice.core.domain.post.application;
 
-import io.woorinpang.postservice.core.domain.UnitTest;
+import io.woorinpang.postservice.core.domain.MockTest;
 import io.woorinpang.postservice.core.domain.post.domain.PostAppender;
 import io.woorinpang.postservice.core.domain.post.domain.PostContent;
 import io.woorinpang.postservice.core.domain.user.User;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -16,7 +15,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
 @DisplayName("[서비스 테스트] PostServiceTest")
-class PostServiceTest extends UnitTest {
+class PostServiceTest extends MockTest {
     @InjectMocks private PostService postService;
     @Mock private PostAppender postAppender;
 
