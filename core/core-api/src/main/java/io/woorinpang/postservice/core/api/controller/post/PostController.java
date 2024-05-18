@@ -5,16 +5,14 @@ import io.woorinpang.postservice.core.api.controller.post.request.AddPostRequest
 import io.woorinpang.postservice.core.api.controller.post.request.ModifyPostRequest;
 import io.woorinpang.postservice.core.api.controller.post.response.FindPagePostResponse;
 import io.woorinpang.postservice.core.api.controller.post.response.FindPostResponse;
+import io.woorinpang.postservice.core.api.support.request.LoginUser;
 import io.woorinpang.postservice.core.api.support.response.ApiResponse;
 import io.woorinpang.postservice.core.api.support.response.DefaultIdResponse;
 import io.woorinpang.postservice.core.domain.post.application.PostService;
 import io.woorinpang.postservice.core.domain.post.domain.Post;
 import io.woorinpang.postservice.core.domain.post.domain.PostTarget;
-import io.woorinpang.postservice.core.domain.support.model.AuthenticatedUser;
-import io.woorinpang.postservice.core.domain.user.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -24,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/posts")
+@RequestMapping("/v1/posts")
 public class PostController {
     private final PostService postService;
 
@@ -57,11 +55,10 @@ public class PostController {
      */
     @PostMapping
     public ResponseEntity<ApiResponse<DefaultIdResponse>> addPost(
-            @RequestBody @Valid AddPostRequest request,
-            AuthenticatedUser authenticatedUser
+            @ModelAttribute("loginUser") LoginUser loginUser,
+            @RequestBody @Valid AddPostRequest request
     ) {
-        long userId = 1L;
-        long successId = postService.addPost(authenticatedUser.toUser(), request.toPostContent());
+        long successId = postService.addPost(loginUser.toUser(), request.toPostContent());
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(new DefaultIdResponse(successId)));
     }
 
@@ -70,11 +67,11 @@ public class PostController {
      */
     @PutMapping("/{postId}")
     public ResponseEntity<ApiResponse> modifyPost(
+            @ModelAttribute("loginUser") LoginUser loginUser,
             @PathVariable long postId,
-            @RequestBody @Valid ModifyPostRequest request,
-            AuthenticatedUser authenticatedUser
+            @RequestBody @Valid ModifyPostRequest request
     ) {
-        postService.modifyPost(new PostTarget(postId), request.getTitle(), request.getContent(), authenticatedUser.toUser());
+        postService.modifyPost(new PostTarget(postId), request.getTitle(), request.getContent(), loginUser.toUser());
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success());
     }
 
@@ -83,9 +80,10 @@ public class PostController {
      */
     @DeleteMapping("/{postId}")
     public ResponseEntity<ApiResponse<?>> deletePost(
+            @ModelAttribute("loginUser") LoginUser loginUser,
             @PathVariable long postId
     ) {
-        postService.deletePost(new PostTarget(postId));
+        postService.deletePost(new PostTarget(postId), loginUser.toUser());
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(ApiResponse.success());
     }
 }

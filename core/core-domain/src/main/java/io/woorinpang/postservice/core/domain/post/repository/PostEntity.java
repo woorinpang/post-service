@@ -14,25 +14,24 @@ import static java.lang.Boolean.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PostEntity extends BaseEntity {
-
-    @Column(name = "userId", columnDefinition = "bigint not null comment '유저 고유번호'")
-    private Long userId;
-
     @Column(name = "title", columnDefinition = "varchar(255) not null comment '제목'")
     private String title;
 
     @Column(name = "content", columnDefinition = "text null comment '내용'")
     private String content;
 
-    @Column(name = "isDeleted", columnDefinition = "bit not null comment '삭제여부'")
-    private boolean isDeleted;
+    @Column(name = "author", columnDefinition = "varchar(60) not null comment '작성자'")
+    private String author;
+
+    @Column(name = "deleted", columnDefinition = "bit not null comment '삭제여부'")
+    private boolean deleted;
 
     @Builder
-    public PostEntity(long userId, String title, String content) {
-        this.userId = userId;
+    public PostEntity(String title, String content, String author, long userId) {
+        this.author = author;
         this.title = title;
         this.content = content;
-        this.isDeleted = FALSE;
+        this.deleted = FALSE;
         this.createUserId(userId);
     }
 
@@ -42,7 +41,8 @@ public class PostEntity extends BaseEntity {
         this.updateUserId(userId);
     }
 
-    public void delete() {
-        this.isDeleted = TRUE;
+    public void delete(long userId) {
+        this.deleted = TRUE;
+        this.updateUserId(userId);
     }
 }

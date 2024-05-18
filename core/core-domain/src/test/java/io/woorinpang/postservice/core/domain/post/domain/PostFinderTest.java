@@ -23,7 +23,7 @@ class PostFinderTest extends DataJpaTest {
         //given
         long userId = 1L;
         IntStream.range(0, 100).forEach(i -> {
-            PostEntity postEntity = new PostEntity(userId, "제목" + i, "내용" + i);
+            PostEntity postEntity = new PostEntity("제목" + i, "내용" + i, "작성자", userId);
             em.persist(postEntity);
         });
 
@@ -45,7 +45,7 @@ class PostFinderTest extends DataJpaTest {
         //given
         long userId = 1L;
 
-        PostEntity postEntity = new PostEntity(userId, "제목", "내용");
+        PostEntity postEntity = new PostEntity("제목", "내용", "작성자", userId);
         em.persist(postEntity);
 
         PostTarget target = new PostTarget(postEntity.getId());
@@ -56,7 +56,7 @@ class PostFinderTest extends DataJpaTest {
         //then
         assertThat(findPost.getTitle()).isEqualTo(postEntity.getTitle());
         assertThat(findPost.getContent()).isEqualTo(postEntity.getContent());
-        assertThat(findPost.getUserId()).isEqualTo(userId);
+        assertThat(findPost.getAuthor()).isEqualTo(postEntity.getAuthor());
         assertThat(findPost.getCreatedDate()).isNotNull();
         assertThat(findPost.getLastModifiedDate()).isNotNull();
     }

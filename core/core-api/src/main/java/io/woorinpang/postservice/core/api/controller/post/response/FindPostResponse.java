@@ -16,7 +16,7 @@ public class FindPostResponse {
 
     private String content;
 
-    private long userId;
+    private String author;
 
     private LocalDateTime createdDate;
 
@@ -26,7 +26,7 @@ public class FindPostResponse {
         this.postId = post.getId();
         this.title = post.getTitle();
         this.content = post.getContent();
-        this.userId = post.getUserId();
+        this.author = post.getAuthor();
         this.createdDate = post.getCreatedDate();
         this.lastModifiedDate = post.getLastModifiedDate();
     }
