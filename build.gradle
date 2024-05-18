@@ -51,17 +51,17 @@ subprojects {
         }
     }
 
-    tasks.register('unitTest', Test) {
-        group = 'verification'
-        useJUnitPlatform {
-            excludeTags('develop', 'context', 'restdocs')
-        }
-    }
-
     tasks.register('contextTest', Test) {
         group = 'verification'
         useJUnitPlatform {
             includeTags('context')
+        }
+    }
+
+    tasks.register('developTest', Test) {
+        group = 'verification'
+        useJUnitPlatform {
+            includeTags('develop')
         }
     }
 
@@ -72,10 +72,17 @@ subprojects {
         }
     }
 
-    tasks.register('developTest', Test) {
+    tasks.register('mockTest', Test) {
         group = 'verification'
         useJUnitPlatform {
-            includeTags('develop')
+            includeTags('mock')
+        }
+    }
+
+    tasks.register('dataJpaTest', Test) {
+        group = 'verification'
+        useJUnitPlatform {
+            includeTags('dataJpa')
         }
     }
 

@@ -8,7 +8,6 @@ import io.woorinpang.postservice.core.domain.post.application.PostCommentService
 import io.woorinpang.postservice.core.domain.post.domain.PostCommentTarget;
 import io.woorinpang.postservice.core.domain.post.domain.PostTarget;
 import io.woorinpang.postservice.core.domain.support.model.AuthenticatedUser;
-import io.woorinpang.postservice.core.domain.user.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

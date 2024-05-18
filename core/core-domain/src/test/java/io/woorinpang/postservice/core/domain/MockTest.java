@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@Tag("unit")
+@Tag("mock")
 @ExtendWith(SpringExtension.class)
-public abstract class UnitTest {
+public abstract class MockTest {
 }
