@@ -1,5 +1,6 @@
 package io.woorinpang.postservice.core.api.controller.post.request;
 
+import io.woorinpang.postservice.core.domain.user.User;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -13,4 +14,10 @@ public class ModifyPostRequest {
 
     @NotBlank(message = "내용을 입력하세요.")
     private String content;
+
+    private long userId;
+
+    public User toUser() {
+        return new User(userId);
+    }
 }

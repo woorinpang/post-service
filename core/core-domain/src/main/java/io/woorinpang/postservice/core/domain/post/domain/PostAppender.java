@@ -22,6 +22,7 @@ public class PostAppender {
                 .userId(user.id())
                 .title(postContent.title())
                 .content(postContent.content())
+                .author(postContent.author())
                 .build();
     }
 }

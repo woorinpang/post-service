@@ -33,7 +33,7 @@ public class PostService {
         postModifier.modify(target, title, content, user);
     }
 
-    public void deletePost(PostTarget target) {
-        postRemover.delete(target);
+    public void deletePost(PostTarget target, User user) {
+        postRemover.delete(target, user);
     }
 }

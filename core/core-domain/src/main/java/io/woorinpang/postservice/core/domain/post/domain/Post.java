@@ -16,7 +16,7 @@ public class Post {
 
     private String content;
 
-    private long userId;
+    private String author;
 
     private LocalDateTime createdDate;
 
@@ -26,7 +26,7 @@ public class Post {
         this.id = entity.getId();
         this.title = entity.getTitle();
         this.content = entity.getContent();
-        this.userId = entity.getUserId();
+        this.author = entity.getAuthor();
         this.createdDate = entity.getCreatedDate();
         this.lastModifiedDate = entity.getLastModifiedDate();
     }

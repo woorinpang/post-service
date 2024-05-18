@@ -1,8 +1,10 @@
 ### 게시글 등록
-POST {{host}}/posts
+POST {{host}}/v1/posts
 Content-Type: application/json
 Authorization: {{access-token}}
 
 {
-  "title" : "title"
+  "title" : "제목",
+  "content" : "내용",
+  "author" : "스프링"
 }
