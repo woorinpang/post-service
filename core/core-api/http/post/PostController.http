@@ -8,3 +8,9 @@ Authorization: {{access-token}}
   "content" : "내용",
   "author" : "스프링"
 }
+
+### 게시글 목록조회
+GET {{host}}/v1/posts
+#    ?page=0
+#    &size=20
+Authorization: {{access-token}}

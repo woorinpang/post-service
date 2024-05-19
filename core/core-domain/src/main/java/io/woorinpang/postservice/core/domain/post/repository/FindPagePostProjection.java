@@ -2,7 +2,6 @@ package io.woorinpang.postservice.core.domain.post.repository;
 
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

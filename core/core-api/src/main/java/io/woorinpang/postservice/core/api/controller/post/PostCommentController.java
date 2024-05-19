@@ -8,11 +8,10 @@ import io.woorinpang.postservice.core.domain.post.application.PostCommentService
 import io.woorinpang.postservice.core.domain.post.domain.PostCommentTarget;
 import io.woorinpang.postservice.core.domain.post.domain.PostTarget;
 import io.woorinpang.postservice.core.domain.support.model.AuthenticatedUser;
+import io.woorinpang.postservice.core.domain.support.model.CommonPage;
+import io.woorinpang.postservice.core.domain.support.model.CommonPageable;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,10 +27,12 @@ public class PostCommentController {
     @GetMapping
     public ResponseEntity<ApiResponse<?>> findComments(
             @PathVariable("postId") long postId,
-            @PageableDefault(page = 0, size = 20) Pageable pageable
+            CommonPageable pageable
     ) {
-        Page<FindPagePostCommentResponse> response =
-                postCommentService.findPagePostComment(new PostTarget(postId), pageable).map(FindPagePostCommentResponse::new);
+
+        CommonPage<FindPagePostCommentResponse> response = postCommentService
+                .findPagePostComment(new PostTarget(postId), pageable)
+                .map(FindPagePostCommentResponse::new);
         return ResponseEntity.ok().body(ApiResponse.success(response));
     }
 

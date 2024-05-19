@@ -3,10 +3,10 @@ package io.woorinpang.postservice.core.domain.post.application;
 import io.woorinpang.postservice.core.domain.post.domain.*;
 import io.woorinpang.postservice.core.domain.post.repository.FindPagePostProjection;
 import io.woorinpang.postservice.core.domain.post.repository.PostSearchCondition;
+import io.woorinpang.postservice.core.domain.support.model.CommonPage;
+import io.woorinpang.postservice.core.domain.support.model.CommonPageable;
 import io.woorinpang.postservice.core.domain.user.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,7 +17,7 @@ public class PostService {
     private final PostRemover postRemover;
     private final PostModifier postModifier;
 
-    public Page<FindPagePostProjection> findPagePost(PostSearchCondition condition, Pageable pageable) {
+    public CommonPage<FindPagePostProjection> findPagePost(PostSearchCondition condition, CommonPageable pageable) {
         return postFinder.findPagePost(condition, pageable);
     }
 

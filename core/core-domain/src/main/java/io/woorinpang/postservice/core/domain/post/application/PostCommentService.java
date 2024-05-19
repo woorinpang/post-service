@@ -2,10 +2,11 @@ package io.woorinpang.postservice.core.domain.post.application;
 
 import io.woorinpang.postservice.core.domain.post.domain.*;
 import io.woorinpang.postservice.core.domain.post.repository.FindPagePostCommentProjection;
+import io.woorinpang.postservice.core.domain.support.model.CommonPage;
+import io.woorinpang.postservice.core.domain.support.model.CommonPageable;
 import io.woorinpang.postservice.core.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,7 +16,7 @@ public class PostCommentService {
     private final PostCommentAppender postCommentAppender;
     private final PostCommentRemover postCommentRemover;
 
-    public Page<FindPagePostCommentProjection> findPagePostComment(PostTarget target, Pageable pageable) {
+    public CommonPage<FindPagePostCommentProjection> findPagePostComment(PostTarget target, CommonPageable pageable) {
         return postCommentFinder.findPagePostComment(target, pageable);
     }
 

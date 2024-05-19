@@ -4,9 +4,11 @@ import io.woorinpang.postservice.core.domain.post.repository.FindPagePostProject
 import io.woorinpang.postservice.core.domain.post.repository.PostEntityRepository;
 import io.woorinpang.postservice.core.domain.post.repository.PostQueryRepository;
 import io.woorinpang.postservice.core.domain.post.repository.PostSearchCondition;
+import io.woorinpang.postservice.core.domain.support.model.CommonPage;
+import io.woorinpang.postservice.core.domain.support.model.CommonPageInfo;
+import io.woorinpang.postservice.core.domain.support.model.CommonPageable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,8 +21,12 @@ public class PostFinder {
     private final PostEntityRepository postEntityRepository;
 
     @Transactional(readOnly = true)
-    public Page<FindPagePostProjection> findPagePost(PostSearchCondition condition, Pageable pageable) {
-        return postQueryRepository.findPagePost(condition, pageable);
+    public CommonPage<FindPagePostProjection> findPagePost(PostSearchCondition condition, CommonPageable pageable) {
+        Page<FindPagePostProjection> content = postQueryRepository.findPagePost(condition, pageable.toPageable());
+        return new CommonPage<>(
+                content.getContent(),
+                new CommonPageInfo(content.getNumber(), content.getSize(), content.getTotalElements(), content.getTotalPages(), content.isFirst(), content.isLast())
+        );
     }
 
     @Transactional(readOnly = true)

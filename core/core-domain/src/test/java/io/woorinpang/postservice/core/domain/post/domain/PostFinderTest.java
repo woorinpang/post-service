@@ -4,10 +4,11 @@ import io.woorinpang.postservice.core.domain.DataJpaTest;
 import io.woorinpang.postservice.core.domain.post.repository.FindPagePostProjection;
 import io.woorinpang.postservice.core.domain.post.repository.PostEntity;
 import io.woorinpang.postservice.core.domain.post.repository.PostSearchCondition;
+import io.woorinpang.postservice.core.domain.support.model.CommonPage;
+import io.woorinpang.postservice.core.domain.support.model.CommonPageable;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 import java.util.stream.IntStream;
@@ -29,14 +30,15 @@ class PostFinderTest extends DataJpaTest {
 
         PostSearchCondition condition = new PostSearchCondition("제목", null);
         PageRequest pageRequest = PageRequest.of(0, 10);
+        CommonPageable pageable = new CommonPageable(0, 20);
 
         //when
-        Page<FindPagePostProjection> posts = postFinder.findPagePost(condition, pageRequest);
+        CommonPage<FindPagePostProjection> posts = postFinder.findPagePost(condition, pageable);
 
         //then
-        assertThat(posts.getTotalElements()).isEqualTo(100);
-        assertThat(posts.getTotalPages()).isEqualTo(10);
-        assertThat(posts.getNumber()).isEqualTo(0);
+        assertThat(posts.getPage().totalElements()).isEqualTo(100);
+        assertThat(posts.getPage().totalPages()).isEqualTo(10);
+        assertThat(posts.getPage().number()).isEqualTo(0);
     }
 
     @DisplayName("게시글 조회하면 Post 객체로 반환한다")
