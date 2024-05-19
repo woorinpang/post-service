@@ -4,13 +4,13 @@ import io.restassured.http.ContentType;
 import io.woorinpang.postservice.core.api.controller.post.request.AddPostRequest;
 import io.woorinpang.postservice.core.domain.post.application.PostService;
 import io.woorinpang.postservice.core.domain.post.repository.FindPagePostProjection;
+import io.woorinpang.postservice.core.domain.support.model.CommonPage;
+import io.woorinpang.postservice.core.domain.support.model.CommonPageInfo;
 import io.woorinpang.test.api.RestDocsTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.restdocs.payload.JsonFieldType;
-import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,7 +28,6 @@ import static org.springframework.restdocs.request.RequestDocumentation.queryPar
 class PostControllerTest extends RestDocsTest {
     private PostService postService;
     private PostController controller;
-    protected MockMvc mockMvcTemp;
 
 
     @BeforeEach
@@ -39,16 +38,26 @@ class PostControllerTest extends RestDocsTest {
     }
 
     @Test
-    void findPagePost() throws Exception {
-        List<FindPagePostProjection> projection = List.of(new FindPagePostProjection(1L, "title", 1L, LocalDateTime.now()));
-        when(postService.findPagePost(any(), any())).thenReturn(new PageImpl<>(projection));
+    void findPagePost() {
+        List<FindPagePostProjection> projection = List.of(
+                new FindPagePostProjection(1L, "title", LocalDateTime.now()),
+                new FindPagePostProjection(1L, "title", LocalDateTime.now()),
+                new FindPagePostProjection(1L, "title", LocalDateTime.now())
+        );
+
+        CommonPage<FindPagePostProjection> response = new CommonPage<>(
+                projection,
+                new CommonPageInfo(0, 20, projection.size(), 1, true, true)
+        );
+
+        when(postService.findPagePost(any(), any())).thenReturn(response);
 
         given().contentType(ContentType.JSON)
                 .queryParam("title", "title")
                 .queryParam("content", "content")
                 .queryParam("page", 0)
                 .queryParam("size", 20)
-                .get("/posts")
+                .get("/v1/posts")
                 .then()
                 .status(HttpStatus.OK)
                 .apply(
@@ -70,12 +79,36 @@ class PostControllerTest extends RestDocsTest {
                                         fieldWithPath("result")
                                                 .type(JsonFieldType.STRING)
                                                 .description("결과 유형(SUCCESS/ERROR"),
-                                        fieldWithPath("data.postId")
-                                                .type(JsonFieldType.NUMBER)
-                                                .description("생성된 Post 고유번호"),
                                         fieldWithPath("error")
                                                 .type(JsonFieldType.STRING)
-                                                .ignored())));
+                                                .ignored(),
+                                        fieldWithPath("data.content[*].postId")
+                                                .type(JsonFieldType.NUMBER)
+                                                .description("Post 고유번호"),
+                                        fieldWithPath("data.content[*].title")
+                                                .type(JsonFieldType.STRING)
+                                                .description("제목"),
+                                        fieldWithPath("data.content[*].createdDate")
+                                                .type(JsonFieldType.STRING)
+                                                .description("생성일자"),
+                                        fieldWithPath("data.page.number")
+                                                .type(JsonFieldType.NUMBER)
+                                                .description("페이지"),
+                                        fieldWithPath("data.page.size")
+                                                .type(JsonFieldType.NUMBER)
+                                                .description("사이즈"),
+                                        fieldWithPath("data.page.totalElements")
+                                                .type(JsonFieldType.NUMBER)
+                                                .description("전체 건수"),
+                                        fieldWithPath("data.page.totalPages")
+                                                .type(JsonFieldType.NUMBER)
+                                                .description("전체 페이지"),
+                                        fieldWithPath("data.page.isFirst")
+                                                .type(JsonFieldType.BOOLEAN)
+                                                .description("처음 여부"),
+                                        fieldWithPath("data.page.isLast")
+                                                .type(JsonFieldType.BOOLEAN)
+                                                .description("마지막 여부"))));
     }
 
     @Test
@@ -87,8 +120,8 @@ class PostControllerTest extends RestDocsTest {
         when(postService.addPost(any(), any())).thenReturn(1L);
 
         given().contentType(ContentType.JSON)
-                .body(new AddPostRequest("title", "content"))
-                .post("/posts")
+                .body(new AddPostRequest("제목", "내용", "작성자"))
+                .post("/v1/posts")
                 .then()
                 .status(HttpStatus.CREATED)
                 .apply(
@@ -102,15 +135,18 @@ class PostControllerTest extends RestDocsTest {
                                                 .description("제목"),
                                         fieldWithPath("content")
                                                 .type(JsonFieldType.STRING)
-                                                .description("내용")
+                                                .description("내용"),
+                                        fieldWithPath("author")
+                                                .type(JsonFieldType.STRING)
+                                                .description("작성자")
                                 ),
                                 responseFields(
                                         fieldWithPath("result")
                                                 .type(JsonFieldType.STRING)
                                                 .description("결과 유형(SUCCESS/ERROR"),
-                                        fieldWithPath("data.postId")
+                                        fieldWithPath("data.id")
                                                 .type(JsonFieldType.NUMBER)
-                                                .description("생성된 Post 고유번호"),
+                                                .description("성공 아이디"),
                                         fieldWithPath("error")
                                                 .type(JsonFieldType.STRING)
                                                 .ignored())));

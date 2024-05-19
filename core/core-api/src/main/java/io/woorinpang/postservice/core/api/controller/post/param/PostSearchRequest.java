@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class FindPagePostSearchParam {
-
+public class PostSearchRequest {
     private String title;
 
     private String content;

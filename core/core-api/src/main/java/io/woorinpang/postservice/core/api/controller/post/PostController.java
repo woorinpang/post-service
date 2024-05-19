@@ -1,6 +1,6 @@
 package io.woorinpang.postservice.core.api.controller.post;
 
-import io.woorinpang.postservice.core.api.controller.post.param.FindPagePostSearchParam;
+import io.woorinpang.postservice.core.api.controller.post.param.PostSearchRequest;
 import io.woorinpang.postservice.core.api.controller.post.request.AddPostRequest;
 import io.woorinpang.postservice.core.api.controller.post.request.ModifyPostRequest;
 import io.woorinpang.postservice.core.api.controller.post.response.FindPagePostResponse;
@@ -11,11 +11,11 @@ import io.woorinpang.postservice.core.api.support.response.DefaultIdResponse;
 import io.woorinpang.postservice.core.domain.post.application.PostService;
 import io.woorinpang.postservice.core.domain.post.domain.Post;
 import io.woorinpang.postservice.core.domain.post.domain.PostTarget;
+import io.woorinpang.postservice.core.domain.support.model.CommonPage;
+import io.woorinpang.postservice.core.domain.support.model.CommonPageable;
+import io.woorinpang.postservice.core.domain.user.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,12 +30,14 @@ public class PostController {
      * Post 목록조회
      */
     @GetMapping
-    public ResponseEntity<ApiResponse<Page<FindPagePostResponse>>> findPagePost(
-            FindPagePostSearchParam param,
-            @PageableDefault(page = 0, size = 20) Pageable pageable
+    public ResponseEntity<ApiResponse<CommonPage<FindPagePostResponse>>> findPagePost(
+            PostSearchRequest searchRequest,
+            CommonPageable pageRequest
     ) {
-        Page<FindPagePostResponse> response =
-                postService.findPagePost(param.toPostSearchCondition(), pageable).map(FindPagePostResponse::new);
+        CommonPage<FindPagePostResponse> response = postService
+                .findPagePost(searchRequest.toPostSearchCondition(), pageRequest)
+                .map(FindPagePostResponse::new);
+
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(response));
     }
 

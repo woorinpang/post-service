@@ -18,7 +18,7 @@ class PostAppenderTest extends DataJpaTest {
     void append() {
         //Arrange
         User user = new User(1L);
-        PostContent postContent = new PostContent("제목", "내용");
+        PostContent postContent = new PostContent("제목", "내용", "작성자");
 
         //Act
         long appendedId = postAppender.append(user, postContent);
