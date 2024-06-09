@@ -1,7 +1,11 @@
 package io.woorinpang.postservice.core.api.controller.post;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.http.ContentType;
+import io.restassured.module.mockmvc.response.MockMvcResponse;
 import io.woorinpang.postservice.core.api.controller.post.request.AddPostRequest;
+import io.woorinpang.postservice.core.api.support.request.LoginUser;
 import io.woorinpang.postservice.core.domain.post.application.PostService;
 import io.woorinpang.postservice.core.domain.post.repository.FindPagePostProjection;
 import io.woorinpang.postservice.core.domain.support.model.CommonPage;
@@ -10,6 +14,7 @@ import io.woorinpang.test.api.RestDocsTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.restdocs.payload.JsonFieldType;
 
 import java.time.LocalDateTime;
@@ -116,10 +121,23 @@ class PostControllerTest extends RestDocsTest {
     }
 
     @Test
-    void addPost() {
+    void addPost() throws JsonProcessingException {
         when(postService.addPost(any(), any())).thenReturn(1L);
 
+        // Create a mock LoginUser object
+        LoginUser loginUser = new LoginUser(1L, "spring", "spring@woorinpang.io", "스프링", "ROLE_USER");
+
+        String header = new ObjectMapper().writeValueAsString(loginUser);
+        // Convert AddPostRequest to JSON string
+        //String addPostRequestJson = objectMapper.writeValueAsString(new AddPostRequest("제목", "내용", "작성자"));
+
+        // Create a mock session and set the loginUser attribute
+        MockHttpSession session = new MockHttpSession();
+        session.setAttribute("loginUser", loginUser);
+
+
         given().contentType(ContentType.JSON)
+                .header("Authenticated-User", loginUser)
                 .body(new AddPostRequest("제목", "내용", "작성자"))
                 .post("/v1/posts")
                 .then()
