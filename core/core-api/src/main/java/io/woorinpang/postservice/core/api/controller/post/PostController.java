@@ -58,9 +58,11 @@ public class PostController {
     @PostMapping
     public ResponseEntity<ApiResponse<DefaultIdResponse>> addPost(
             @ModelAttribute("loginUser") LoginUser loginUser,
+            @RequestHeader("Authenticated-User") String authenticatedUser,
             @RequestBody @Valid AddPostRequest request
     ) {
-        long successId = postService.addPost(loginUser.toUser(), request.toPostContent());
+
+        long successId = postService.addPost(new User(1L), request.toPostContent());
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(new DefaultIdResponse(successId)));
     }
 
